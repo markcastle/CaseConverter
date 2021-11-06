@@ -1,4 +1,4 @@
-# Case Converter for .NET
+# Case Converter for .NET [![Build status](https://ci.appveyor.com/api/projects/status/sa2aul12onxqf7e1?svg=true)](https://ci.appveyor.com/project/markcastle/caseconverter)  ![AppVeyor tests](https://img.shields.io/appveyor/tests/markcastle/caseconverter)
 
 > “Naming Conventions is one of the two hard things in Computer Science” - Jeff Atwood (Stack Overflow Co-founder)*. 
 
