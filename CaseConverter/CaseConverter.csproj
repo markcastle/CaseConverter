@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Mark Castle</Authors>
-    <Version>1.0.7</Version>
+    <Version>1.0.9</Version>
     <Company>Captive Reality Ltd</Company>
     <Copyright>© Captive Reality Ltd. All Rights Reserved.</Copyright>
     <PackageLicenseFile>LICENCE</PackageLicenseFile>
