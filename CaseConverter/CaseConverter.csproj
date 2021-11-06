@@ -7,7 +7,7 @@
     <Company>Captive Reality Ltd</Company>
     <Copyright>© Captive Reality Ltd. All Rights Reserved.</Copyright>
     <PackageLicenseFile>LICENCE</PackageLicenseFile>
-    <Description>camelCase, snake_case, kebab-case, PascalCase and Train-Case</Description>
+    <Description>Convert between camelCase, snake_case, kebab-case, PascalCase and Train-Case</Description>
   </PropertyGroup>
 
   <ItemGroup>

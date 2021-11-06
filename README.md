@@ -4,7 +4,7 @@
 
 **This library is designed to make it easier to convert the different case conventions in c# / .net through some simple to use string extension methods.**
 
-Simple string manipulation package designed to make it easy to convert strings between different cases such as camelCase, snake_case, kebab-case, PascalCase and Train-Case.
+Simple string extension library designed to make it easy to convert strings between different cases such as camelCase, snake_case, kebab-case, PascalCase and Train-Case.
 
 This is a .NET STANDARD 2.1 Library
 
