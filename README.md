@@ -8,6 +8,16 @@ Simple string extension library designed to make it easy to convert strings betw
 
 This is a .NET STANDARD 2.1 Library
 
+## Installation
+
+NuGet:
+
+	Install-Package CaseConverter
+
+dotnet CLI
+
+	dotnet add package CaseConverter
+
 ## Usage
 
 	using CaseConverter;
