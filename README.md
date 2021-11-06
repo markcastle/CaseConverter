@@ -1,6 +1,6 @@
-# Case Converter for .NET  [![Build status](https://ci.appveyor.com/api/projects/status/sa2aul12onxqf7e1?svg=true)](https://ci.appveyor.com/project/markcastle/caseconverter)  ![AppVeyor tests](https://img.shields.io/appveyor/tests/markcastle/caseconverter) ![GitHub](https://img.shields.io/github/license/markcastle/CaseConverter)
+# Case Converter for .NET  [![Build status](https://ci.appveyor.com/api/projects/status/sa2aul12onxqf7e1?svg=true)](https://ci.appveyor.com/project/markcastle/caseconverter)  ![AppVeyor tests](https://img.shields.io/appveyor/tests/markcastle/caseconverter) ![GitHub](https://img.shields.io/nuget/v/CaseConverter.svg)  ![GitHub](https://img.shields.io/github/license/markcastle/CaseConverter)
 
-> “Naming Conventions is one of the two hard things in Computer Science” - Jeff Atwood (Stack Overflow Co-founder)*. 
+> “Naming Conventions is one of the two hard things in Computer Science” - Jeff Atwood (Stack Overflow Co-founder). 
 
 **This library is designed to make it easier to convert the different case conventions in c# / .net through some simple to use string extension methods.**
 
