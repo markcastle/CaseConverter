@@ -1,12 +1,13 @@
 # Case Converter for .NET  [![Build status](https://ci.appveyor.com/api/projects/status/sa2aul12onxqf7e1?svg=true)](https://ci.appveyor.com/project/markcastle/caseconverter)  ![AppVeyor tests](https://img.shields.io/appveyor/tests/markcastle/caseconverter) ![GitHub](https://img.shields.io/nuget/v/CaseConverter.svg)  ![GitHub](https://img.shields.io/github/license/markcastle/CaseConverter)
 
-> “Naming Conventions is one of the two hard things in Computer Science” - Jeff Atwood (Stack Overflow Co-founder). 
+> “Naming Conventions is one of the two hard things in Computer Science”
+> --- Jeff Atwood (Stack Overflow Co-founder). 
 
 **This library is designed to make it easier to convert the different case conventions in c# / .net through some simple to use string extension methods.**
 
 Simple string extension library designed to make it easy to convert strings between different cases such as camelCase, snake_case, kebab-case, PascalCase, Train-Case and Title Case.
 
-This is a .NET STANDARD 2.1 Library
+This is a .NET STANDARD 2.0 and .NET STANDARD 2.1 Library
 
 ## Installation
 
@@ -20,6 +21,8 @@ dotnet CLI
 
 ## Usage
 
+```csharp
+	
 	using CaseConverter;
 
 	Console.WriteLine("Hello World!".ToCamelCase());
@@ -28,6 +31,8 @@ dotnet CLI
     Console.WriteLine("Hello World!".ToPascalCase());
     Console.WriteLine("Hello World!".ToTitleCase());
     Console.WriteLine("Hello World!".ToTrainCase());
+    
+  ```
 
 String extensions:
 
@@ -72,5 +77,5 @@ To run tests:
 The MIT License (MIT)
 See LICENCE file for Licence (MIT Licence)  
 
-© 2021 Captive Reality Ltd.  All Rights Reserved. 
+© 2021-2023 Captive Reality Ltd.  All Rights Reserved. 
 Author: Mark Castle

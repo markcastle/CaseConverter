@@ -25,12 +25,12 @@ namespace CaseConverter
                 return text;
             }
 
-            var builder = new StringBuilder(text.Length + Math.Min(2, text.Length / 5));
-            var previousCategory = default(UnicodeCategory?);
+            StringBuilder builder = new StringBuilder(text.Length + Math.Min(2, text.Length / 5));
+            UnicodeCategory? previousCategory = default;
 
-            for (var currentIndex = 0; currentIndex < text.Length; currentIndex++)
+            for (int currentIndex = 0; currentIndex < text.Length; currentIndex++)
             {
-                var currentChar = text[currentIndex];
+                char currentChar = text[currentIndex];
                 if (currentChar == '_')
                 {
                     builder.Append('_');
@@ -38,7 +38,7 @@ namespace CaseConverter
                     continue;
                 }
 
-                var currentCategory = char.GetUnicodeCategory(currentChar);
+                UnicodeCategory currentCategory = char.GetUnicodeCategory(currentChar);
                 switch (currentCategory)
                 {
                     case UnicodeCategory.UppercaseLetter:

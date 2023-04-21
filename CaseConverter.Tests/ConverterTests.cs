@@ -1,8 +1,5 @@
-using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static System.Net.Mime.MediaTypeNames;
+using System;
 
 namespace CaseConverter.Tests
 {
@@ -57,7 +54,7 @@ namespace CaseConverter.Tests
         [TestMethod]
         public void Test_ToTitleCase()
         {
-            string test = "test_sc";
+            const string test = "test_sc";
             Console.WriteLine(test.ToTitleCase());
 
             Assert.IsTrue("testSC".ToTitleCase() == "Testsc");
@@ -72,7 +69,7 @@ namespace CaseConverter.Tests
         [TestMethod]
         public void Test_ToPascalCase()
         {
-            string test = "test_sc";
+            const string test = "test_sc";
             Console.WriteLine(test.ToPascalCase());
 
             Assert.IsTrue("this is a test".ToPascalCase() == "ThisIsATest");
@@ -90,7 +87,7 @@ namespace CaseConverter.Tests
         [TestMethod]
         public void Test_ToKebabCase()
         {
-            string test = "IAmEditingSomeXMLAndHTML";
+            const string test = "IAmEditingSomeXMLAndHTML";
             Console.WriteLine(test.SplitCamelCase("-").ToLower());
 
             // For Comparison with... System.Text.Json.JsonNamingPolicy.CamelCase.ConvertName
@@ -109,15 +106,15 @@ namespace CaseConverter.Tests
         public void Test_TestAll()
         {
 
-            string plainEnglish = "The quick brown fox";
-            string titleCase = "The Quick Brown Fox";
-            string plainEnglishAllUpperCase = "THE QUICK BROWN FOX"; //  not working yet
-            string constantCase = "THE_QUICK_BROWN_FOX"; //  not working yet
-            string camelCase = "theQuickBrownFox";
-            string pascalCase = "TheQuickBrownFox";
-            string snakeCase = "the_quick_brown_fox";
-            string kebabCase = "the-quick-brown-fox";
-            string trainCase = "The-Quick-Brown-Fox";
+            const string plainEnglish = "The quick brown fox";
+            const string titleCase = "The Quick Brown Fox";
+            const string plainEnglishAllUpperCase = "THE QUICK BROWN FOX"; //  not working yet
+            const string constantCase = "THE_QUICK_BROWN_FOX"; //  not working yet
+            const string camelCase = "theQuickBrownFox";
+            const string pascalCase = "TheQuickBrownFox";
+            const string snakeCase = "the_quick_brown_fox";
+            const string kebabCase = "the-quick-brown-fox";
+            const string trainCase = "The-Quick-Brown-Fox";
 
             Console.WriteLine(plainEnglishAllUpperCase.ToKebabCase());
 
