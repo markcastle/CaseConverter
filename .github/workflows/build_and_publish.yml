@@ -1,0 +1,45 @@
+name: Build and Publish to NuGet
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Publish NuGet package
+      run: dotnet pack --no-build --output nupkg
+      if: ${{ github.ref == 'refs/heads/master' }}
+
+    - name: Push to NuGet
+      uses: actions/upload-artifact@v2
+      with:
+        name: NuGet package
+        path: nupkg/*.nupkg
+      if: ${{ github.ref == 'refs/heads/master' }}
+
+    - name: Publish to NuGet
+      uses: rohith/publish-nuget@v2
+      with:
+        PROJECT_FILE_PATH: CaseConverter/CaseConverter.csproj
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+      if: ${{ github.ref == 'refs/heads/master' }}
