@@ -191,9 +191,9 @@ namespace CaseConverter.Tests
             Assert.IsTrue("THIS-IS-AN-UPPER-CASE-STRING".IsAllUpper());
             Assert.IsTrue("THIS_IS_AN_UPPER_CASE_STRING".IsAllUpper());
 
-            Assert.IsTrue("word".PascalCaseSingleWord() == "Word");
-            Assert.IsTrue("pseudopseudohypoparathyroidism".PascalCaseSingleWord() == "Pseudopseudohypoparathyroidism");
-            Assert.IsTrue("PSEUDOPSEUDOHYPOPARATHYROIDISM".PascalCaseSingleWord() == "Pseudopseudohypoparathyroidism");
+            Assert.IsTrue("word".ToPascalCase() == "Word");
+            Assert.IsTrue("pseudopseudohypoparathyroidism".ToPascalCase() == "Pseudopseudohypoparathyroidism");
+            Assert.IsTrue("PSEUDOPSEUDOHYPOPARATHYROIDISM".ToPascalCase() == "Pseudopseudohypoparathyroidism");
 
             Assert.IsTrue("WordsAreAllYouNeed".InsertCharacterBeforeUpperCase() == "Words Are All You Need");
             Assert.IsTrue("WordsAreAllYouNeed".InsertCharacterBeforeUpperCase('+') == "Words+Are+All+You+Need");
