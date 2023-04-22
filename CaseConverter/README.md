@@ -98,6 +98,14 @@ For the latest version we're working on improving performance and memory efficie
 |    ToCamelCaseBenchmark | 1.497 us | 0.0206 us | 0.0193 us | 0.1659 |   1.36 KB |
 | ToCamelCaseOldBenchmark | 5.362 us | 0.0730 us | 0.0609 us | 0.4272 |   3.52 KB |
 
+#### ToSnakeCase()
+
+Wasn't able to improve it so left the original code intact.
+
+|                  Method |     Mean |     Error |    StdDev |   Gen0 | Allocated |
+|------------------------ |----------|-----------|-----------|--------|-----------|
+|    ToSnakeCaseBenchmark | 1.765 us | 0.0112 us | 0.0094 us | 0.1793 |   1.47 KB |
+
 #### All Tests
 
 |                   Method |       Mean |    Error |   StdDev |   Gen0 | Allocated |

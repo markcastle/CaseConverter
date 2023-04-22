@@ -14,12 +14,12 @@ namespace CaseConverter
     /// </summary>
     public static class Converters
     {
+
         /// <summary>
-        /// Convert a string to Snake Case
-        /// See https://stackoverflow.com/questions/63055621/how-to-convert-camel-case-to-snake-case-with-two-capitals-next-to-each-other
+        /// Converts a given string to snake case.
         /// </summary>
-        /// <param name="text"></param>
-        /// <returns>string</returns>
+        /// <param name="text">The string to be converted to snake case.</param>
+        /// <returns>The resulting snake case string.</returns>
         public static string ToSnakeCase(this string text)
         {
             if (string.IsNullOrEmpty(text))
@@ -27,12 +27,18 @@ namespace CaseConverter
                 return text;
             }
 
+            // Create a new instance of StringBuilder to store the output string with an estimated capacity
+            // Nullable UnicodeCategory variable to keep track of the previous category
             StringBuilder builder = new(text.Length + Math.Min(2, text.Length / 5));
             UnicodeCategory? previousCategory = default;
 
+            // Iterate over each character in the input string
             for (int currentIndex = 0; currentIndex < text.Length; currentIndex++)
             {
+                // Get the current character
                 char currentChar = text[currentIndex];
+
+                // If the current character is already an underscore, append it to the output string
                 if (currentChar == '_')
                 {
                     builder.Append('_');
@@ -40,11 +46,16 @@ namespace CaseConverter
                     continue;
                 }
 
+                // Get the Unicode category of the current character
                 UnicodeCategory currentCategory = char.GetUnicodeCategory(currentChar);
+
                 switch (currentCategory)
                 {
+                    // If the current character is an uppercase letter or titlecase letter
                     case UnicodeCategory.UppercaseLetter:
                     case UnicodeCategory.TitlecaseLetter:
+                        // If the previous character is a space, lowercase letter or decimal digit,
+                        // and the next character is a lowercase letter, append an underscore to the output string
                         if (previousCategory == UnicodeCategory.SpaceSeparator ||
                             previousCategory == UnicodeCategory.LowercaseLetter ||
                             previousCategory != UnicodeCategory.DecimalDigitNumber &&
@@ -56,18 +67,23 @@ namespace CaseConverter
                             builder.Append('_');
                         }
 
+                        // Convert the current character to lowercase
                         currentChar = char.ToLower(currentChar, CultureInfo.InvariantCulture);
                         break;
 
+                    // If the current character is a lowercase letter or decimal digit
                     case UnicodeCategory.LowercaseLetter:
                     case UnicodeCategory.DecimalDigitNumber:
+                        // If the previous character is a space, append an underscore to the output string
                         if (previousCategory == UnicodeCategory.SpaceSeparator)
                         {
                             builder.Append('_');
                         }
                         break;
 
+                    // If the current character is a separator, punctuation mark or symbol
                     default:
+                        // If the previous category is not null, set it to a space separator
                         if (previousCategory != null)
                         {
                             previousCategory = UnicodeCategory.SpaceSeparator;
@@ -75,22 +91,24 @@ namespace CaseConverter
                         continue;
                 }
 
+                // Append the current character to the output string
                 builder.Append(currentChar);
+
+                // Update the previous category to the current category
                 previousCategory = currentCategory;
             }
 
+            // Return the resulting snake case string
             return builder.ToString();
         }
 
-     
-
-
+        
         /// <summary>
-        /// Converts a given string to camel case with the option to remove whitespace and preserve leading underscores.
+        /// Converts a given string to camel case.
         /// </summary>
         /// <param name="text">The string to be converted to camel case.</param>
-        /// <param name="removeWhitespace">Whether to remove whitespace or not. By default, whitespace is removed.</param>
-        /// <param name="preserveLeadingUnderscore">Whether to preserve leading underscores or not. By default, leading underscores are not preserved.</param>
+        /// <param name="removeWhitespace">Whether to remove whitespace or not.</param>
+        /// <param name="preserveLeadingUnderscore">Whether to preserve the leading underscore or not.</param>
         /// <returns>The resulting camel case string.</returns>
         public static string ToCamelCase(this string text,
                                          bool removeWhitespace = true,
@@ -106,35 +124,45 @@ namespace CaseConverter
                 text = text.ToLower(); // if the text is all uppercase, convert it to lowercase
             }
 
-            bool addLeadingUnderscore = preserveLeadingUnderscore && text.StartsWith("_"); // check if the leading underscore should be preserved
+            // Check if the leading underscore should be preserved
+            bool addLeadingUnderscore = preserveLeadingUnderscore && text.StartsWith("_");
 
-            StringBuilder result = new(text.Length); // create a new instance of StringBuilder to store the output string
-            bool toUpper = false; // flag to keep track of whether the current character should be uppercase or not
+            // Create a new instance of StringBuilder to store the output string
+            StringBuilder result = new(text.Length);
+            
+            // Flag to keep track of whether the current character should be uppercase or not
+            bool toUpper = false;
 
-            foreach (char c in text) // iterate over each character in the input string
+            // Iterate over each character in the input string
+            foreach (char c in text)
             {
-                if (c == '-' || c == '_' || (removeWhitespace && char.IsWhiteSpace(c))) // if the current character is a separator or whitespace and the whitespace is to be removed
+                // If the current character is a separator or whitespace and the whitespace is to be removed, set the flag to true
+                if (c == '-' || c == '_' || (removeWhitespace && char.IsWhiteSpace(c)))
                 {
-                    toUpper = true; // set the flag to true
+                    toUpper = true;
                 }
                 else
                 {
-                    result.Append(toUpper ? char.ToUpperInvariant(c) : c); // append the current character to the output string in uppercase or lowercase based on the flag
-                    toUpper = false; // reset the flag to false
+                    // Append the current character to the output string in uppercase or lowercase based on the flag, and reset the flag to false
+                    result.Append(toUpper ? char.ToUpperInvariant(c) : c);
+                    toUpper = false;
                 }
             }
 
             if (result.Length > 0)
             {
-                result[0] = char.ToLowerInvariant(result[0]); // convert the first character to lowercase
+                // Convert the first character to lowercase
+                result[0] = char.ToLowerInvariant(result[0]);
             }
 
             if (addLeadingUnderscore)
             {
-                result.Insert(0, '_'); // insert the leading underscore at the beginning of the string
+                // Insert the leading underscore at the beginning of the string
+                result.Insert(0, '_');
             }
 
-            return result.ToString(); // return the resulting camel case string
+            // Return the resulting camel case string
+            return result.ToString();
         }
 
 
@@ -204,27 +232,38 @@ namespace CaseConverter
         {
             if (string.IsNullOrEmpty(input)) return input; // if input is null or empty, return it as it is.
 
-            StringBuilder result = new(); // create a new instance of StringBuilder to store the output string
-            bool isPrevUpper = false; // flag to keep track of whether the previous character was an uppercase letter or not
+            // Create a new instance of StringBuilder to store the output string
+            StringBuilder result = new();
+            // Flag to keep track of whether the previous character was an uppercase letter or not
+            bool isPrevUpper = false;
 
-            for (int i = 0; i < input.Length; i++) // iterate over each character in the input string
+            // Iterate over each character in the input string
+            for (int i = 0; i < input.Length; i++)
             {
-                char currentChar = input[i]; // get the current character
+                // Get the current character
+                char currentChar = input[i];
 
-                if (i > 0 && char.IsUpper(currentChar)) // if the current character is uppercase and not the first character
+                // If the current character is uppercase and not the first character
+                if (i > 0 && char.IsUpper(currentChar))
                 {
-                    if (!isPrevUpper || (i < input.Length - 1 && !char.IsUpper(input[i + 1]))) // if the previous character was not uppercase or the next character is not uppercase
+                    // If the previous character was not uppercase or the next character is not uppercase
+                    if (!isPrevUpper || (i < input.Length - 1 && !char.IsUpper(input[i + 1])))
                     {
-                        result.Append(splitWith); // append the separator to the output string
+                        // Append the separator to the output string
+                        result.Append(splitWith);
                     }
                 }
 
-                result.Append(currentChar); // append the current character to the output string
-                isPrevUpper = char.IsUpper(currentChar); // update the flag to reflect whether the current character is uppercase or not
+                // Append the current character to the output string
+                result.Append(currentChar);
+                // Update the flag to reflect whether the current character is uppercase or not
+                isPrevUpper = char.IsUpper(currentChar);
             }
 
-            return result.ToString(); // return the resulting string with words separated by the specified separator
+            // Return the resulting string with words separated by the specified separator
+            return result.ToString();
         }
+
 
 
         /// <summary>
@@ -503,7 +542,8 @@ namespace CaseConverter
         /// <param name="text"></param>
         /// <param name="character"></param>
         /// <returns>string</returns>
-        public static string InsertCharacterBeforeUpperCase(this string text, char character = ' ')
+        public static string InsertCharacterBeforeUpperCase(this string text,
+                                                            char character = ' ')
         {
             StringBuilder sb = new();
             char previousChar = char.MinValue; // Unicode '\0'

@@ -86,15 +86,21 @@ public class CaseConverterBenchmarks
     //}
 
 
-    [Benchmark]
-    public string ToCamelCaseOldBenchmark()
-    {
-        return TestStringForWhitespace.ToCamelCaseOld();
-    }
+    //[Benchmark]
+    //public string ToCamelCaseOldBenchmark()
+    //{
+    //    return TestStringForWhitespace.ToCamelCaseOld();
+    //}
+
+    //[Benchmark]
+    //public string ToCamelCaseBenchmark()
+    //{
+    //    return TestStringForWhitespace.ToCamelCase();
+    //}
 
     [Benchmark]
-    public string ToCamelCaseBenchmark()
+    public string ToSnakeCaseBenchmark()
     {
-        return TestStringForWhitespace.ToCamelCase();
+        return TestStringForWhitespace.ToSnakeCase();
     }
 }
