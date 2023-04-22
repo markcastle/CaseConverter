@@ -82,49 +82,62 @@ namespace CaseConverter
             return builder.ToString();
         }
 
+     
+
+
         /// <summary>
-        /// Converts any string to camelCase optionally removing whitespace
-        /// See: https://stackoverflow.com/questions/42310727/convert-string-to-camelcase-from-titlecase-c-sharp
-        /// See Also System.Text.Json.JsonNamingPolicy.CamelCase.ConvertName(text)
+        /// Converts a given string to camel case with the option to remove whitespace and preserve leading underscores.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="removeWhitespace"></param>
-        /// <param name="preserveLeadingUnderscore"></param>
-        /// <returns>string</returns>
-        public static string ToCamelCase(this string text, bool removeWhitespace = true, bool preserveLeadingUnderscore = false)
+        /// <param name="text">The string to be converted to camel case.</param>
+        /// <param name="removeWhitespace">Whether to remove whitespace or not. By default, whitespace is removed.</param>
+        /// <param name="preserveLeadingUnderscore">Whether to preserve leading underscores or not. By default, leading underscores are not preserved.</param>
+        /// <returns>The resulting camel case string.</returns>
+        public static string ToCamelCase(this string text,
+                                         bool removeWhitespace = true,
+                                         bool preserveLeadingUnderscore = false)
         {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text; // if text is null or empty, return it as it is.
+            }
 
             if (text.IsAllUpper())
             {
-                text = text.ToLower();
+                text = text.ToLower(); // if the text is all uppercase, convert it to lowercase
             }
 
-            bool addLeadingUnderscore = preserveLeadingUnderscore && text.Substring(0, 1) == "_";
+            bool addLeadingUnderscore = preserveLeadingUnderscore && text.StartsWith("_"); // check if the leading underscore should be preserved
 
-            if (text.Contains("-"))
-                text = text.Replace("-", " ");
+            StringBuilder result = new(text.Length); // create a new instance of StringBuilder to store the output string
+            bool toUpper = false; // flag to keep track of whether the current character should be uppercase or not
 
-            if (text.Contains("_"))
-                text = text.Replace("_", " ");
-
-            // If we have spaces then convert each letter after the space to Upper Case
-            if (text.Contains(" "))
-                text = ToTitleCase(text).Trim();
-
-            // Convert the first letter to lower case
-            if (!string.IsNullOrEmpty(text) && text.Length > 1)
+            foreach (char c in text) // iterate over each character in the input string
             {
-                text = char.ToLowerInvariant(text[0]) + text.Substring(1);
+                if (c == '-' || c == '_' || (removeWhitespace && char.IsWhiteSpace(c))) // if the current character is a separator or whitespace and the whitespace is to be removed
+                {
+                    toUpper = true; // set the flag to true
+                }
+                else
+                {
+                    result.Append(toUpper ? char.ToUpperInvariant(c) : c); // append the current character to the output string in uppercase or lowercase based on the flag
+                    toUpper = false; // reset the flag to false
+                }
             }
 
-            if (removeWhitespace)
-                text = text.Replace(" ", "");
+            if (result.Length > 0)
+            {
+                result[0] = char.ToLowerInvariant(result[0]); // convert the first character to lowercase
+            }
 
             if (addLeadingUnderscore)
-                text = "_" + text;
+            {
+                result.Insert(0, '_'); // insert the leading underscore at the beginning of the string
+            }
 
-            return text;
+            return result.ToString(); // return the resulting camel case string
         }
+
+
 
         /// <summary>
         /// Converts the specified string to PascalCase.
@@ -181,31 +194,38 @@ namespace CaseConverter
         }
 
 
+        /// <summary>
+        /// Splits a given camel case string into separate words using the specified separator.
+        /// </summary>
+        /// <param name="input">The camel case string to be split.</param>
+        /// <param name="splitWith">The separator to be used. By default, a single space is used.</param>
+        /// <returns>The resulting string with words separated by the specified separator.</returns>
         public static string SplitCamelCase(this string input, string splitWith = " ")
         {
-            if (string.IsNullOrEmpty(input)) return input;
+            if (string.IsNullOrEmpty(input)) return input; // if input is null or empty, return it as it is.
 
-            StringBuilder result = new();
-            bool isPrevUpper = false;
+            StringBuilder result = new(); // create a new instance of StringBuilder to store the output string
+            bool isPrevUpper = false; // flag to keep track of whether the previous character was an uppercase letter or not
 
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < input.Length; i++) // iterate over each character in the input string
             {
-                char currentChar = input[i];
+                char currentChar = input[i]; // get the current character
 
-                if (i > 0 && char.IsUpper(currentChar))
+                if (i > 0 && char.IsUpper(currentChar)) // if the current character is uppercase and not the first character
                 {
-                    if (!isPrevUpper || (i < input.Length - 1 && !char.IsUpper(input[i + 1])))
+                    if (!isPrevUpper || (i < input.Length - 1 && !char.IsUpper(input[i + 1]))) // if the previous character was not uppercase or the next character is not uppercase
                     {
-                        result.Append(splitWith);
+                        result.Append(splitWith); // append the separator to the output string
                     }
                 }
 
-                result.Append(currentChar);
-                isPrevUpper = char.IsUpper(currentChar);
+                result.Append(currentChar); // append the current character to the output string
+                isPrevUpper = char.IsUpper(currentChar); // update the flag to reflect whether the current character is uppercase or not
             }
 
-            return result.ToString();
+            return result.ToString(); // return the resulting string with words separated by the specified separator
         }
+
 
         /// <summary>
         /// Converts a string to kebab-case, with words separated by hyphens.
@@ -348,7 +368,51 @@ namespace CaseConverter
             return text.Any(char.IsUpper) ? text.SplitCamelCaseOld("-").Replace("--", "-").ToLower() : text.Replace("--", "-").ToLower();
 
         }
-        
+
+        /// <summary>
+        /// Converts any string to camelCase optionally removing whitespace
+        /// See: https://stackoverflow.com/questions/42310727/convert-string-to-camelcase-from-titlecase-c-sharp
+        /// See Also System.Text.Json.JsonNamingPolicy.CamelCase.ConvertName(text)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="removeWhitespace"></param>
+        /// <param name="preserveLeadingUnderscore"></param>
+        /// <returns>string</returns>
+        public static string ToCamelCaseOld(this string text, bool removeWhitespace = true, bool preserveLeadingUnderscore = false)
+        {
+
+            if (text.IsAllUpper())
+            {
+                text = text.ToLower();
+            }
+
+            bool addLeadingUnderscore = preserveLeadingUnderscore && text.Substring(0, 1) == "_";
+
+            if (text.Contains("-"))
+                text = text.Replace("-", " ");
+
+            if (text.Contains("_"))
+                text = text.Replace("_", " ");
+
+            // If we have spaces then convert each letter after the space to Upper Case
+            if (text.Contains(" "))
+                text = ToTitleCase(text).Trim();
+
+            // Convert the first letter to lower case
+            if (!string.IsNullOrEmpty(text) && text.Length > 1)
+            {
+                text = char.ToLowerInvariant(text[0]) + text.Substring(1);
+            }
+
+            if (removeWhitespace)
+                text = text.Replace(" ", "");
+
+            if (addLeadingUnderscore)
+                text = "_" + text;
+
+            return text;
+        }
+
         /// <summary>
         /// Split a string by Uppercase whilst dealing correctly with acronyms
         /// The string you split with can be supplied or defaults to a space.
@@ -421,11 +485,7 @@ namespace CaseConverter
             // Convert the StringBuilder to a string and return it
             return sb.ToString();
         }
-
-
-
-
-
+        
         /// <summary>
         /// Convert a string to Train Case
         /// </summary>
@@ -473,8 +533,6 @@ namespace CaseConverter
             return text.InsertCharacterBeforeUpperCase();
         }
 
-
-
         /// <summary>
         /// Replace specific characters found in a string
         /// See: https://stackoverflow.com/a/7265786/7986443
@@ -503,22 +561,34 @@ namespace CaseConverter
             return WhiteSpaceRegex.Replace(input, replacement);
         }
 
+
         /// <summary>
-        /// Test to determine if a string is all upper case
-        /// See: https://stackoverflow.com/questions/448206/detecting-if-a-string-is-all-caps
+        /// Extension method to check if all the letters in the input string are uppercase.
         /// </summary>
-        /// <param name="input"></param>
-        /// <returns>bool</returns>
+        /// <param name="input">The string to check for uppercase letters.</param>
+        /// <returns>True if all the letters in the input string are uppercase, otherwise false.</returns>
         public static bool IsAllUpper(this string input)
         {
-            foreach (char t in input)
+            // Return early if the input string is null or empty
+            if (string.IsNullOrEmpty(input))
             {
-                if (char.IsLetter(t) && !char.IsUpper(t))
-                    return false;
+                return true;
             }
 
+            // Iterate over each character in the input string
+            foreach (char c in input)
+            {
+                // If the current character is a letter and not uppercase, return false
+                if (char.IsLetter(c) && !char.IsUpper(c))
+                {
+                    return false;
+                }
+            }
+
+            // If all characters are either uppercase letters or non-letter characters, return true
             return true;
         }
+
 
         /// <summary>
         /// Convert SnakeCase to CamelCase

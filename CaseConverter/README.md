@@ -91,10 +91,17 @@ For the latest version we're working on improving performance and memory efficie
 |    ToTitleCaseBenchmark | 218.3 ns | 2.59 ns | 2.43 ns | 0.0200 |     168 B |
 | ToTitleCaseBenchmarkOld | 225.8 ns | 3.26 ns | 3.05 ns | 0.0381 |     320 B |
 
+#### ToCamelCase()
+
+|                  Method |     Mean |     Error |    StdDev |   Gen0 | Allocated |
+|------------------------ |----------|-----------|-----------|--------|-----------|
+|    ToCamelCaseBenchmark | 1.497 us | 0.0206 us | 0.0193 us | 0.1659 |   1.36 KB |
+| ToCamelCaseOldBenchmark | 5.362 us | 0.0730 us | 0.0609 us | 0.4272 |   3.52 KB |
+
 #### All Tests
 
 |                   Method |       Mean |    Error |   StdDev |   Gen0 | Allocated |
-|------------------------- |-----------:|---------:|---------:|-------:|----------:|
+|------------------------- |------------|----------|----------|--------|-----------|
 |     ToKebabCaseBenchmark |   130.9 ns |  2.66 ns |  3.37 ns | 0.0324 |     272 B |
 |  ToKebabCaseBenchmarkOld | 1,432.0 ns | 28.02 ns | 24.84 ns | 0.0496 |     424 B |
 |    ToPascalCaseBenchmark |   175.3 ns |  3.31 ns |  2.94 ns | 0.0315 |     264 B |
