@@ -1,11 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaseConverter", "CaseConverter\CaseConverter.csproj", "{BB78BB33-5B4A-4B3D-A854-DF2A888B0064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaseConverter", "CaseConverter\CaseConverter.csproj", "{BB78BB33-5B4A-4B3D-A854-DF2A888B0064}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaseConverter.Tests", "CaseConverter.Tests\CaseConverter.Tests.csproj", "{9ED478C6-0392-4F28-B3DD-D8669BD4E0ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaseConverter.Tests", "CaseConverter.Tests\CaseConverter.Tests.csproj", "{9ED478C6-0392-4F28-B3DD-D8669BD4E0ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{57F11602-56F1-400F-8879-1CAF92485D00}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build_and_publish.yml = .github\workflows\build_and_publish.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaseConverter.Benchmarks", "CaseConverter.Benchmarks\CaseConverter.Benchmarks.csproj", "{46C82C0F-22D2-4128-808B-3FDC5CB496D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +28,10 @@ Global
 		{9ED478C6-0392-4F28-B3DD-D8669BD4E0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ED478C6-0392-4F28-B3DD-D8669BD4E0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ED478C6-0392-4F28-B3DD-D8669BD4E0ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46C82C0F-22D2-4128-808B-3FDC5CB496D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46C82C0F-22D2-4128-808B-3FDC5CB496D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46C82C0F-22D2-4128-808B-3FDC5CB496D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46C82C0F-22D2-4128-808B-3FDC5CB496D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

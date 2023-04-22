@@ -3,12 +3,13 @@
   <PropertyGroup>
 	<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Authors>Mark Castle</Authors>
-    <Version>1.0.11</Version>
+    <Version>1.0.12</Version>
     <Company>Captive Reality Ltd</Company>
     <Copyright>© Captive Reality Ltd. All Rights Reserved.</Copyright>
     <PackageLicenseFile>LICENCE</PackageLicenseFile>
     <Description>Convert between camelCase, snake_case, kebab-case, PascalCase and Train-Case</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

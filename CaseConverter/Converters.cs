@@ -3,7 +3,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+//#if DEBUG
 using System.Threading;
+//#endif
 
 namespace CaseConverter
 {
@@ -25,7 +27,7 @@ namespace CaseConverter
                 return text;
             }
 
-            StringBuilder builder = new StringBuilder(text.Length + Math.Min(2, text.Length / 5));
+            StringBuilder builder = new(text.Length + Math.Min(2, text.Length / 5));
             UnicodeCategory? previousCategory = default;
 
             for (int currentIndex = 0; currentIndex < text.Length; currentIndex++)
@@ -125,11 +127,199 @@ namespace CaseConverter
         }
 
         /// <summary>
+        /// Converts the specified string to PascalCase.
+        /// </summary>
+        /// <param name="text">The string to convert.</param>
+        /// <returns>The PascalCase version of the string.</returns>
+        public static string ToPascalCase(this string text)
+        {
+            // Create a StringBuilder object to store the result.
+            StringBuilder result = new();
+
+            // Get the TextInfo object for the current culture.
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+
+            // Flag to track if we are at the beginning of a new word.
+            bool newWord = true;
+
+            // Iterate over each character in the string.
+            for (int i = 0; i < text.Length; i++)
+            {
+                char currentChar = text[i];
+
+                // If the current character is a letter or digit.
+                if (char.IsLetterOrDigit(currentChar))
+                {
+                    // If we are at the beginning of a new word, convert the character to uppercase.
+                    if (newWord)
+                    {
+                        result.Append(textInfo.ToUpper(currentChar));
+                        newWord = false;
+                    }
+                    // Otherwise, convert the character to lowercase.
+                    else
+                    {
+                        result.Append(textInfo.ToLower(currentChar));
+                    }
+                }
+                // If the current character is not a letter or digit, we are at the beginning of a new word.
+                else
+                {
+                    newWord = true;
+                }
+
+                // If the current character is a lowercase letter and the next character is an uppercase letter, 
+                // we are at the beginning of a new word.
+                if (i < text.Length - 1 && char.IsLower(text[i]) && char.IsUpper(text[i + 1]))
+                {
+                    newWord = true;
+                }
+            }
+
+            // Return the result as a string.
+            return result.ToString();
+        }
+
+
+        public static string SplitCamelCase(this string input, string splitWith = " ")
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+
+            StringBuilder result = new();
+            bool isPrevUpper = false;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                char currentChar = input[i];
+
+                if (i > 0 && char.IsUpper(currentChar))
+                {
+                    if (!isPrevUpper || (i < input.Length - 1 && !char.IsUpper(input[i + 1])))
+                    {
+                        result.Append(splitWith);
+                    }
+                }
+
+                result.Append(currentChar);
+                isPrevUpper = char.IsUpper(currentChar);
+            }
+
+            return result.ToString();
+        }
+
+        /// <summary>
+        /// Converts a string to kebab-case, with words separated by hyphens.
+        /// </summary>
+        /// <param name="text">The input string to be converted to kebab-case.</param>
+        /// <returns>A kebab-case representation of the input string.</returns>
+        public static string ToKebabCase(this string text)
+        {
+            // Return the input text if it's null or empty
+            if (string.IsNullOrEmpty(text)) return text;
+
+            // Initialize a StringBuilder to store the result
+            StringBuilder result = new();
+            // Define a flag to track whether the previous character is a separator
+            bool previousCharacterIsSeparator = true;
+
+            // Iterate through each character in the input text
+            for (int i = 0; i < text.Length; i++)
+            {
+                char currentChar = text[i];
+
+                // If the current character is an uppercase letter or a digit
+                if (char.IsUpper(currentChar) || char.IsDigit(currentChar))
+                {
+                    // Add a hyphen if the previous character is not a separator and
+                    // the current character is preceded by a lowercase letter or followed by a lowercase letter
+                    if (!previousCharacterIsSeparator && (i > 0 && (char.IsLower(text[i - 1]) || (i < text.Length - 1 && char.IsLower(text[i + 1])))))
+                    {
+                        result.Append("-");
+                    }
+
+                    // Append the lowercase version of the current character to the result
+                    result.Append(char.ToLowerInvariant(currentChar));
+                    // Update the flag to indicate that the current character is not a separator
+                    previousCharacterIsSeparator = false;
+                }
+                // If the current character is a lowercase letter
+                else if (char.IsLower(currentChar))
+                {
+                    // Append the current character to the result
+                    result.Append(currentChar);
+                    // Update the flag to indicate that the current character is not a separator
+                    previousCharacterIsSeparator = false;
+                }
+                // If the current character is a space, underscore, or hyphen
+                else if (currentChar == ' ' || currentChar == '_' || currentChar == '-')
+                {
+                    // Add a hyphen if the previous character is not a separator
+                    if (!previousCharacterIsSeparator)
+                    {
+                        result.Append("-");
+                    }
+                    // Update the flag to indicate that the current character is a separator
+                    previousCharacterIsSeparator = true;
+                }
+            }
+
+            // Return the kebab-case representation of the input string
+            return result.ToString();
+        }
+
+
+
+
+
+// #if DEBUG
+
+        #region -------------------- Old Methods --------------------
+
+        /// <summary>
+        /// Convert a string to PascalCase
+        /// See: https://stackoverflow.com/questions/23345348/topascalcase-c-sharp-for-all-caps-abbreviations
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>string</returns>
+        public static string ToPascalCaseOld(this string text)
+        {
+            StringBuilder result = new();
+            Regex nonWordChars = new(@"[^a-zA-Z0-9]+");
+            string[] tokens = nonWordChars.Split(text);
+            foreach (string token in tokens)
+            {
+                result.Append(token.PascalCaseSingleWordOld());
+            }
+
+            return result.ToString();
+        }
+
+        /// <summary>
+        /// Convert a single word to Pascal Case.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>string</returns>
+        public static string PascalCaseSingleWordOld(this string text)
+        {
+            // return text.FirstCharToUpperCase();
+            Match match = Regex.Match(text, @"^(?<word>\d+|^[a-z]+|[A-Z]+|[A-Z][a-z]+|\d[a-z]+)+$");
+            Group groups = match.Groups["word"];
+
+            TextInfo textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
+            StringBuilder result = new();
+            foreach (Capture capture in groups.Captures)
+            {
+                result.Append(textInfo.ToTitleCase(capture.Value.ToLower()));
+            }
+            return result.ToString();
+        }
+
+        /// <summary>
         /// Convert a string to Kebab Case
         /// </summary>
         /// <param name="text"></param>
         /// <returns>string</returns>
-        public static string ToKebabCase(this string text)
+        public static string ToKebabCaseOld(this string text)
         {
             if (text.IsAllUpper())
                 text = text.ToLower();
@@ -141,28 +331,35 @@ namespace CaseConverter
             // If we have any upper case characters then it's camelCase, so split the string up based on the upper cas chars
             // ensure there are no double hyphens then convert the entire thing to lower case.
             // If there were no upper case characters then we didn't need to do that camelCase Split.
-            return text.Any(char.IsUpper) ? text.SplitCamelCase("-").Replace("--", "-").ToLower() : text.Replace("--", "-").ToLower();
+            return text.Any(char.IsUpper) ? text.SplitCamelCaseOld("-").Replace("--", "-").ToLower() : text.Replace("--", "-").ToLower();
 
         }
-
+        
         /// <summary>
-        /// Convert a string to PascalCase
-        /// See: https://stackoverflow.com/questions/23345348/topascalcase-c-sharp-for-all-caps-abbreviations
+        /// Split a string by Uppercase whilst dealing correctly with acronyms
+        /// The string you split with can be supplied or defaults to a space.
+        /// Inspired by https://dotnetfiddle.net/VBuoy7
+        /// See: https://stackoverflow.com/questions/36147162/c-sharp-string-split-separate-string-by-uppercase
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="input"></param>
+        /// <param name="splitWith"></param>
         /// <returns>string</returns>
-        public static string ToPascalCase(this string text)
+        public static string SplitCamelCaseOld(this string input, string splitWith = " ")
         {
-            StringBuilder result = new StringBuilder();
-            Regex nonWordChars = new Regex(@"[^a-zA-Z0-9]+");
-            string[] tokens = nonWordChars.Split(text);
-            foreach (string token in tokens)
-            {
-                result.Append(token.PascalCaseSingleWord());
-            }
+            string first = Regex
+                .Replace(input, "(?<before>[^A-Z])(?<after>([A-Z]))", "${before} ${after}", RegexOptions.Compiled)
+                .Trim();
 
-            return result.ToString();
+            return Regex
+                .Replace(first, "(?<before>[^ ])(?<after>([A-Z][^A-Zs]))", "${before}" + splitWith + "${after}", RegexOptions.Compiled)
+                .Trim().Replace(" ", splitWith);
+
         }
+
+        #endregion
+
+// #endif
+
 
         /// <summary>
         /// Converts the specified string to Title Case
@@ -187,26 +384,7 @@ namespace CaseConverter
             return text.ToPascalCase().SplitCamelCase("-").FirstCharToUpperCase().Replace("--", "-");
         }
 
-        /// <summary>
-        /// Convert a single word to Pascal Case.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns>string</returns>
-        public static string PascalCaseSingleWord(this string text)
-        {
-            // return text.FirstCharToUpperCase();
-            Match match = Regex.Match(text, @"^(?<word>\d+|^[a-z]+|[A-Z]+|[A-Z][a-z]+|\d[a-z]+)+$");
-            Group groups = match.Groups["word"];
-
-            TextInfo textInfo = Thread.CurrentThread.CurrentCulture.TextInfo;
-            StringBuilder result = new StringBuilder();
-            foreach (Capture capture in groups.Captures)
-            {
-                result.Append(textInfo.ToTitleCase(capture.Value.ToLower()));
-            }
-            return result.ToString();
-        }
-
+      
         /// <summary>
         /// Insert any character before all upper space characters in a string
         /// </summary>
@@ -215,7 +393,7 @@ namespace CaseConverter
         /// <returns>string</returns>
         public static string InsertCharacterBeforeUpperCase(this string text, char character = ' ')
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             char previousChar = char.MinValue; // Unicode '\0'
             foreach (char c in text)
             {
@@ -243,26 +421,7 @@ namespace CaseConverter
             return text.InsertCharacterBeforeUpperCase();
         }
 
-        /// <summary>
-        /// Split a string by Uppercase whilst dealing correctly with acronyms
-        /// The string you split with can be supplied or defaults to a space.
-        /// Inspired by https://dotnetfiddle.net/VBuoy7
-        /// See: https://stackoverflow.com/questions/36147162/c-sharp-string-split-separate-string-by-uppercase
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="splitWith"></param>
-        /// <returns>string</returns>
-        public static string SplitCamelCase(this string input, string splitWith = " ")
-        {
-            var first = Regex
-                .Replace(input, "(?<before>[^A-Z])(?<after>([A-Z]))", "${before} ${after}", RegexOptions.Compiled)
-                .Trim();
 
-            return Regex
-                .Replace(first, "(?<before>[^ ])(?<after>([A-Z][^A-Zs]))", "${before}" + splitWith + "${after}", RegexOptions.Compiled)
-                .Trim().Replace(" ", splitWith);
-
-        }
 
         /// <summary>
         /// Replace specific characters found in a string
@@ -278,7 +437,7 @@ namespace CaseConverter
             return string.Join(newVal, temp);
         }
 
-        private static readonly Regex WhiteSpaceRegex = new Regex(@"\s+");
+        private static readonly Regex WhiteSpaceRegex = new(@"\s+");
 
         /// <summary>
         /// Replace all whitespace in a string

@@ -1,23 +1,38 @@
-# Case Converter for .NET [![Build status](https://ci.appveyor.com/api/projects/status/sa2aul12onxqf7e1?svg=true)](https://ci.appveyor.com/project/markcastle/caseconverter)  ![AppVeyor tests](https://img.shields.io/appveyor/tests/markcastle/caseconverter)
+# Case Converter for .NET  [![Build status](https://ci.appveyor.com/api/projects/status/sa2aul12onxqf7e1?svg=true)](https://ci.appveyor.com/project/markcastle/caseconverter)  ![AppVeyor tests](https://img.shields.io/appveyor/tests/markcastle/caseconverter) ![GitHub](https://img.shields.io/nuget/v/CaseConverter.svg)  ![GitHub](https://img.shields.io/github/license/markcastle/CaseConverter)
 
-> “Naming Conventions is one of the two hard things in Computer Science” - Jeff Atwood (Stack Overflow Co-founder)*. 
+> “Naming Conventions is one of the two hard things in Computer Science”
+> --- Jeff Atwood (Stack Overflow Co-founder). 
 
 **This library is designed to make it easier to convert the different case conventions in c# / .net through some simple to use string extension methods.**
 
-Simple string extension library designed to make it easy to convert strings between different cases such as camelCase, snake_case, kebab-case, PascalCase and Train-Case.
+Simple string extension library designed to make it easy to convert strings between different cases such as camelCase, snake_case, kebab-case, PascalCase, Train-Case and Title Case.
 
-This is a .NET STANDARD 2.1 Library
+This is a .NET STANDARD 2.0 and .NET STANDARD 2.1 Library
+
+## Installation
+
+NuGet:
+
+	Install-Package CaseConverter
+
+dotnet CLI
+
+	dotnet add package CaseConverter
 
 ## Usage
 
-	using CaseConverter;
+```csharp
+	
+    using CaseConverter;
 
-	Console.WriteLine("Hello World!".ToCamelCase());
+    Console.WriteLine("Hello World!".ToCamelCase());
     Console.WriteLine("Hello World!".ToSnakeCase());
     Console.WriteLine("Hello World!".ToKebabCase());
     Console.WriteLine("Hello World!".ToPascalCase());
     Console.WriteLine("Hello World!".ToTitleCase());
     Console.WriteLine("Hello World!".ToTrainCase());
+    
+  ```
 
 String extensions:
 
@@ -49,6 +64,35 @@ I make no claims about the speed and efficiency of the included string extension
 To run tests:
 
 	dotnet test
+
+
+## Benchmarks
+
+For the latest version we're working on improving performance and memory efficiency.. here is a comparison of the improvements:
+
+#### ToPascalCase()
+
+|                   Method |       Mean |    Error |   StdDev |   Gen0 | Allocated |
+|--------------------------|------------|----------|----------|--------|-----------|
+|    ToPascalCaseBenchmark |   179.9 ns |  3.00 ns |  2.34 ns | 0.0315 |     264 B |
+| ToPascalCaseBenchmarkOld | 2,269.5 ns | 43.25 ns | 36.12 ns | 0.4005 |    3352 B |
+
+#### ToKebabCase()
+
+| Method                    | Mean        | Error     | StdDev    | Gen0    | Allocated |
+|---------------------------|-------------|-----------|-----------|---------|-----------|
+| ToKebabCaseBenchmark      | 132.1 ns    | 2.69 ns   | 4.02 ns   | 0.0324  | 272 B     |
+| ToKebabCaseBenchmarkOld   | 1,423.1 ns  | 27.69 ns  | 27.19 ns  | 0.0496  | 424 B     |
+
+
+|                   Method |       Mean |    Error |   StdDev |   Gen0 | Allocated |
+|------------------------- |-----------:|---------:|---------:|-------:|----------:|
+|     ToKebabCaseBenchmark |   130.9 ns |  2.66 ns |  3.37 ns | 0.0324 |     272 B |
+|  ToKebabCaseBenchmarkOld | 1,432.0 ns | 28.02 ns | 24.84 ns | 0.0496 |     424 B |
+|    ToPascalCaseBenchmark |   175.3 ns |  3.31 ns |  2.94 ns | 0.0315 |     264 B |
+| ToPascalCaseBenchmarkOld | 2,428.6 ns | 47.89 ns | 60.57 ns | 0.4005 |    3352 B |
+
+If you can suggest further improvements please get in touch or better still make the improvements and send us a PR :-)
  
 ## Contributing
 
@@ -62,5 +106,5 @@ To run tests:
 The MIT License (MIT)
 See LICENCE file for Licence (MIT Licence)  
 
-© 2021 Captive Reality Ltd.  All Rights Reserved. 
+© 2021-2023 Captive Reality Ltd.  All Rights Reserved. 
 Author: Mark Castle
