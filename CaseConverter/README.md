@@ -57,18 +57,22 @@ Supplementary string extensions included:
 - string.**FirstCharToLowerCase()** Convert the first character in a string to lower case.
 - string.**FirstCharToUpperCase()** Convert the first character in a string to upper case.
 
-I make no claims about the speed and efficiency of the included string extensions but welcome any pull requests that make improvements.
-
 ## Tests
+
+
+We added a lot more tests in the latest version.
 
 To run tests:
 
 	dotnet test
 
-
 ## Benchmarks
 
-For the latest version we're working on improving performance and memory efficiency.. here is a comparison of the improvements:
+For the latest version we're working on improving performance and memory efficiency.. here is a comparison of the improvements.
+
+
+Additional gains would likely be possible if we stopped targetting .NET STANDARD 2.0 and .NET STANDARD 2.1 and instead targetted .net 6+
+
 
 #### ToPascalCase()
 
@@ -108,12 +112,16 @@ Wasn't able to improve it so left the original code intact.
 
 #### All Tests
 
-|                   Method |       Mean |    Error |   StdDev |   Gen0 | Allocated |
-|------------------------- |------------|----------|----------|--------|-----------|
-|     ToKebabCaseBenchmark |   130.9 ns |  2.66 ns |  3.37 ns | 0.0324 |     272 B |
-|  ToKebabCaseBenchmarkOld | 1,432.0 ns | 28.02 ns | 24.84 ns | 0.0496 |     424 B |
-|    ToPascalCaseBenchmark |   175.3 ns |  3.31 ns |  2.94 ns | 0.0315 |     264 B |
-| ToPascalCaseBenchmarkOld | 2,428.6 ns | 47.89 ns | 60.57 ns | 0.4005 |    3352 B |
+|                     Method |         Mean |       Error |      StdDev |   Gen0 | Allocated |
+|--------------------------- |-------------:|------------:|------------:|-------:|----------:|
+|       ToSnakeCaseBenchmark |   172.143 ns |   3.2836 ns |   3.2249 ns | 0.0343 |     288 B |
+|       ToCamelCaseBenchmark |    80.951 ns |   1.5001 ns |   1.3298 ns | 0.0200 |     168 B |
+|       ToKebabCaseBenchmark |   129.666 ns |   2.4154 ns |   2.6847 ns | 0.0324 |     272 B |
+|      ToPascalCaseBenchmark |   191.285 ns |   3.7843 ns |   3.8862 ns | 0.0315 |     264 B |
+|       ToTitleCaseBenchmark |   210.939 ns |   4.0187 ns |   4.3000 ns | 0.0200 |     168 B |
+|       ToTrainCaseBenchmark |   346.119 ns |   4.3459 ns |   4.0651 ns | 0.0639 |     536 B |
+|        IsAllUpperBenchmark |     5.075 ns |   0.0638 ns |   0.0533 ns |      - |         - |
+| ReplaceWhitespaceBenchmark | 7,099.933 ns | 113.6132 ns | 100.7152 ns | 0.0839 |     728 B |
 
 If you can suggest further improvements please get in touch or better still make the improvements and send us a PR :-)
  
