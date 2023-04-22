@@ -21,35 +21,41 @@ public class CaseConverterBenchmarks
     //    return TestString.ToCamelCase();
     //}
 
-    [Benchmark]
-    public string ToKebabCaseBenchmark()
-    {
-        return TestString.ToKebabCase();
-    }
+    //[Benchmark]
+    //public string ToKebabCaseBenchmark()
+    //{
+    //    return TestString.ToKebabCase();
+    //}
     
-    [Benchmark]
-    public string ToKebabCaseBenchmarkOld()
-    {
-        return TestString.ToKebabCaseOld();
-    }
-
-    [Benchmark]
-    public string ToPascalCaseBenchmark()
-    {
-        return TestString2.ToPascalCase();
-    }
-
-    [Benchmark]
-    public string ToPascalCaseBenchmarkOld()
-    {
-        return TestString2.ToPascalCaseOld();
-    }
+    //[Benchmark]
+    //public string ToKebabCaseBenchmarkOld()
+    //{
+    //    return TestString.ToKebabCaseOld();
+    //}
 
     //[Benchmark]
-    //public string ToTitleCaseBenchmark()
+    //public string ToPascalCaseBenchmark()
     //{
-    //    return TestString.ToTitleCase();
+    //    return TestString2.ToPascalCase();
     //}
+
+    //[Benchmark]
+    //public string ToPascalCaseBenchmarkOld()
+    //{
+    //    return TestString2.ToPascalCaseOld();
+    //}
+
+    [Benchmark]
+    public string ToTitleCaseBenchmark()
+    {
+        return TestString.ToTitleCase();
+    }
+
+    [Benchmark]
+    public string ToTitleCaseBenchmarkOld()
+    {
+        return TestString.ToTitleCaseOld();
+    }
 
     //[Benchmark]
     //public string ToTrainCaseBenchmark()

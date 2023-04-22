@@ -271,9 +271,23 @@ namespace CaseConverter
 
 
 
-// #if DEBUG
+        // #if DEBUG
 
         #region -------------------- Old Methods --------------------
+
+        private static readonly TextInfo TextInfo = CultureInfo.CurrentCulture.TextInfo;
+
+        /// <summary>
+        /// Converts the specified string to Title Case
+        /// (except for words that are entirely in uppercase, which are considered to be acronyms).
+        /// See: https://docs.microsoft.com/en-us/dotnet/api/system.globalization.textinfo.totitlecase?view=net-5.0
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns>string</returns>
+        public static string ToTitleCaseOld(this string text)
+        {
+            return TextInfo.ToTitleCase(text);
+        }
 
         /// <summary>
         /// Convert a string to PascalCase
@@ -358,21 +372,59 @@ namespace CaseConverter
 
         #endregion
 
-// #endif
-
+        // #endif
 
         /// <summary>
-        /// Converts the specified string to Title Case
-        /// (except for words that are entirely in uppercase, which are considered to be acronyms).
-        /// See: https://docs.microsoft.com/en-us/dotnet/api/system.globalization.textinfo.totitlecase?view=net-5.0
+        /// Extension method to convert a given string to title case.
         /// </summary>
-        /// <param name="text"></param>
-        /// <returns>string</returns>
+        /// <param name="text">The string to convert to title case.</param>
+        /// <returns>A new string with each word in title case.</returns>
         public static string ToTitleCase(this string text)
         {
-            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
-            return textInfo.ToTitleCase(text);
+            // Check if the input string is null or empty, return the original string in that case
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+
+            // Create a StringBuilder with the initial capacity set to the length of the input string
+            // This helps avoid unnecessary memory allocations
+            StringBuilder sb = new(text.Length);
+
+            // A boolean flag to track if we are at the start of a new word
+            bool newWord = true;
+
+            // Iterate over each character in the input string
+            foreach (char c in text)
+            {
+                // If the current character is a whitespace, hyphen, or underscore,
+                // set the newWord flag to true and append the character to the StringBuilder
+                if (char.IsWhiteSpace(c) || c is '-' or '_')
+                {
+                    newWord = true;
+                    sb.Append(c);
+                }
+                // If we are at the start of a new word, append the uppercase version of the character
+                // and set the newWord flag to false
+                else if (newWord)
+                {
+                    sb.Append(char.ToUpper(c));
+                    newWord = false;
+                }
+                // If we are not at the start of a new word, append the lowercase version of the character
+                else
+                {
+                    sb.Append(char.ToLower(c));
+                }
+            }
+
+            // Convert the StringBuilder to a string and return it
+            return sb.ToString();
         }
+
+
+
+
 
         /// <summary>
         /// Convert a string to Train Case

@@ -84,6 +84,14 @@ For the latest version we're working on improving performance and memory efficie
 | ToKebabCaseBenchmark      | 132.1 ns    | 2.69 ns   | 4.02 ns   | 0.0324  | 272 B     |
 | ToKebabCaseBenchmarkOld   | 1,423.1 ns  | 27.69 ns  | 27.19 ns  | 0.0496  | 424 B     |
 
+#### ToTitleCase()
+
+|                  Method |     Mean |   Error |  StdDev |   Gen0 | Allocated |
+|------------------------ |----------|---------|---------|--------|-----------|
+|    ToTitleCaseBenchmark | 218.3 ns | 2.59 ns | 2.43 ns | 0.0200 |     168 B |
+| ToTitleCaseBenchmarkOld | 225.8 ns | 3.26 ns | 3.05 ns | 0.0381 |     320 B |
+
+#### All Tests
 
 |                   Method |       Mean |    Error |   StdDev |   Gen0 | Allocated |
 |------------------------- |-----------:|---------:|---------:|-------:|----------:|
