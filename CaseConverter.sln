@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 	ProjectSection(SolutionItems) = preProject
 		.appveyor.yml = .appveyor.yml
 		.github\workflows\build_and_publish.yml = .github\workflows\build_and_publish.yml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaseConverter.Benchmarks", "CaseConverter.Benchmarks\CaseConverter.Benchmarks.csproj", "{46C82C0F-22D2-4128-808B-3FDC5CB496D9}"
