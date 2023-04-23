@@ -112,16 +112,47 @@ Wasn't able to improve it so left the original code intact.
 
 #### All Tests
 
-|                     Method |         Mean |       Error |      StdDev |   Gen0 | Allocated |
-|--------------------------- |-------------:|------------:|------------:|-------:|----------:|
-|       ToSnakeCaseBenchmark |   172.143 ns |   3.2836 ns |   3.2249 ns | 0.0343 |     288 B |
-|       ToCamelCaseBenchmark |    80.951 ns |   1.5001 ns |   1.3298 ns | 0.0200 |     168 B |
-|       ToKebabCaseBenchmark |   129.666 ns |   2.4154 ns |   2.6847 ns | 0.0324 |     272 B |
-|      ToPascalCaseBenchmark |   191.285 ns |   3.7843 ns |   3.8862 ns | 0.0315 |     264 B |
-|       ToTitleCaseBenchmark |   210.939 ns |   4.0187 ns |   4.3000 ns | 0.0200 |     168 B |
-|       ToTrainCaseBenchmark |   346.119 ns |   4.3459 ns |   4.0651 ns | 0.0639 |     536 B |
-|        IsAllUpperBenchmark |     5.075 ns |   0.0638 ns |   0.0533 ns |      - |         - |
-| ReplaceWhitespaceBenchmark | 7,099.933 ns | 113.6132 ns | 100.7152 ns | 0.0839 |     728 B |
+|                     Method |           Job |       Runtime |          Mean |       Error |      StdDev | Ratio | RatioSD |   Gen0 | Allocated | Alloc Ratio |
+|--------------------------- |-------------- |-------------- |---------------|-------------|-------------|-------|---------|--------|-----------|-------------|
+|       ToSnakeCaseBenchmark |      .NET 5.0 |      .NET 5.0 |    199.257 ns |   3.8065 ns |   3.9090 ns |  0.95 |    0.02 | 0.0343 |     288 B |        1.00 |
+|       ToSnakeCaseBenchmark |      .NET 6.0 |      .NET 6.0 |    177.983 ns |   3.4400 ns |   3.6807 ns |  0.84 |    0.02 | 0.0343 |     288 B |        1.00 |
+|       ToSnakeCaseBenchmark |      .NET 7.0 |      .NET 7.0 |    164.851 ns |   1.4823 ns |   1.3140 ns |  0.78 |    0.01 | 0.0343 |     288 B |        1.00 |
+|       ToSnakeCaseBenchmark | .NET Core 3.1 | .NET Core 3.1 |    211.328 ns |   2.4708 ns |   2.0633 ns |  1.00 |    0.00 | 0.0343 |     288 B |        1.00 |
+|                            |               |               |               |             |             |       |         |        |           |             |
+|       ToCamelCaseBenchmark |      .NET 5.0 |      .NET 5.0 |    115.336 ns |   2.3167 ns |   2.2753 ns |  0.77 |    0.05 | 0.0200 |     168 B |        1.00 |
+|       ToCamelCaseBenchmark |      .NET 6.0 |      .NET 6.0 |     82.941 ns |   1.4910 ns |   1.3946 ns |  0.56 |    0.03 | 0.0200 |     168 B |        1.00 |
+|       ToCamelCaseBenchmark |      .NET 7.0 |      .NET 7.0 |     86.708 ns |   1.3273 ns |   1.0363 ns |  0.58 |    0.03 | 0.0200 |     168 B |        1.00 |
+|       ToCamelCaseBenchmark | .NET Core 3.1 | .NET Core 3.1 |    156.865 ns |   3.6809 ns |  10.8532 ns |  1.00 |    0.00 | 0.0200 |     168 B |        1.00 |
+|                            |               |               |               |             |             |       |         |        |           |             |
+|       ToKebabCaseBenchmark |      .NET 5.0 |      .NET 5.0 |    188.836 ns |   2.3753 ns |   2.1056 ns |  0.89 |    0.03 | 0.0324 |     272 B |        1.00 |
+|       ToKebabCaseBenchmark |      .NET 6.0 |      .NET 6.0 |    129.301 ns |   1.7678 ns |   1.5671 ns |  0.61 |    0.02 | 0.0324 |     272 B |        1.00 |
+|       ToKebabCaseBenchmark |      .NET 7.0 |      .NET 7.0 |    127.751 ns |   2.3711 ns |   2.2179 ns |  0.60 |    0.02 | 0.0324 |     272 B |        1.00 |
+|       ToKebabCaseBenchmark | .NET Core 3.1 | .NET Core 3.1 |    210.257 ns |   4.2073 ns |   6.0339 ns |  1.00 |    0.00 | 0.0324 |     272 B |        1.00 |
+|                            |               |               |               |             |             |       |         |        |           |             |
+|      ToPascalCaseBenchmark |      .NET 5.0 |      .NET 5.0 |    278.123 ns |   3.2519 ns |   3.0418 ns |  0.85 |    0.02 | 0.0315 |     264 B |        1.00 |
+|      ToPascalCaseBenchmark |      .NET 6.0 |      .NET 6.0 |    189.604 ns |   2.2500 ns |   1.9945 ns |  0.58 |    0.02 | 0.0315 |     264 B |        1.00 |
+|      ToPascalCaseBenchmark |      .NET 7.0 |      .NET 7.0 |    170.063 ns |   2.5240 ns |   2.1076 ns |  0.52 |    0.01 | 0.0315 |     264 B |        1.00 |
+|      ToPascalCaseBenchmark | .NET Core 3.1 | .NET Core 3.1 |    324.897 ns |   6.4022 ns |   8.0968 ns |  1.00 |    0.00 | 0.0315 |     264 B |        1.00 |
+|                            |               |               |               |             |             |       |         |        |           |             |
+|       ToTitleCaseBenchmark |      .NET 5.0 |      .NET 5.0 |    281.820 ns |   5.5559 ns |   4.6395 ns |  0.90 |    0.02 | 0.0200 |     168 B |        1.00 |
+|       ToTitleCaseBenchmark |      .NET 6.0 |      .NET 6.0 |    506.287 ns |   8.0127 ns |   8.9061 ns |  1.62 |    0.05 | 0.1211 |    1016 B |        6.05 |
+|       ToTitleCaseBenchmark |      .NET 7.0 |      .NET 7.0 |    485.576 ns |   8.4432 ns |   8.6705 ns |  1.54 |    0.04 | 0.1211 |    1016 B |        6.05 |
+|       ToTitleCaseBenchmark | .NET Core 3.1 | .NET Core 3.1 |    314.564 ns |   4.8291 ns |   4.0325 ns |  1.00 |    0.00 | 0.0200 |     168 B |        1.00 |
+|                            |               |               |               |             |             |       |         |        |           |             |
+|       ToTrainCaseBenchmark |      .NET 5.0 |      .NET 5.0 |    488.572 ns |   9.3516 ns |   8.7475 ns |  0.90 |    0.02 | 0.0639 |     536 B |        1.00 |
+|       ToTrainCaseBenchmark |      .NET 6.0 |      .NET 6.0 |    343.272 ns |   4.4961 ns |   4.2056 ns |  0.63 |    0.02 | 0.0639 |     536 B |        1.00 |
+|       ToTrainCaseBenchmark |      .NET 7.0 |      .NET 7.0 |    302.115 ns |   5.8996 ns |   6.5574 ns |  0.56 |    0.02 | 0.0639 |     536 B |        1.00 |
+|       ToTrainCaseBenchmark | .NET Core 3.1 | .NET Core 3.1 |    542.426 ns |  10.8240 ns |  10.6306 ns |  1.00 |    0.00 | 0.0639 |     536 B |        1.00 |
+|                            |               |               |               |             |             |       |         |        |           |             |
+|        IsAllUpperBenchmark |      .NET 5.0 |      .NET 5.0 |      6.971 ns |   0.1332 ns |   0.1480 ns |  0.74 |    0.02 |      - |         - |          NA |
+|        IsAllUpperBenchmark |      .NET 6.0 |      .NET 6.0 |      5.091 ns |   0.1288 ns |   0.1533 ns |  0.54 |    0.02 |      - |         - |          NA |
+|        IsAllUpperBenchmark |      .NET 7.0 |      .NET 7.0 |      4.166 ns |   0.0988 ns |   0.1057 ns |  0.44 |    0.01 |      - |         - |          NA |
+|        IsAllUpperBenchmark | .NET Core 3.1 | .NET Core 3.1 |      9.476 ns |   0.0494 ns |   0.0385 ns |  1.00 |    0.00 |      - |         - |          NA |
+|                            |               |               |               |             |             |       |         |        |           |             |
+| ReplaceWhitespaceBenchmark |      .NET 5.0 |      .NET 5.0 |  7,583.997 ns | 132.7825 ns | 124.2049 ns |  0.40 |    0.01 | 0.0839 |     728 B |        0.06 |
+| ReplaceWhitespaceBenchmark |      .NET 6.0 |      .NET 6.0 |  7,196.590 ns | 125.6170 ns | 117.5022 ns |  0.38 |    0.01 | 0.0839 |     728 B |        0.06 |
+| ReplaceWhitespaceBenchmark |      .NET 7.0 |      .NET 7.0 |  7,353.717 ns | 144.7446 ns | 148.6420 ns |  0.39 |    0.02 | 0.0839 |     728 B |        0.06 |
+| ReplaceWhitespaceBenchmark | .NET Core 3.1 | .NET Core 3.1 | 18,699.030 ns | 362.7740 ns | 542.9830 ns |  1.00 |    0.00 | 1.4343 |   12168 B |        1.00 |
 
 If you can suggest further improvements please get in touch or better still make the improvements and send us a PR :-)
  
