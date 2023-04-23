@@ -64,6 +64,8 @@ namespace CaseConverter.Tests
             Assert.IsTrue("test_snake_case123".ToTitleCase() == "Test_Snake_Case123");
             Assert.IsTrue("_test_snake_case123_testSnakeCase123".ToTitleCase() == "_Test_Snake_Case123_Testsnakecase123");
             Assert.IsTrue("test_sc".ToTitleCase() == "Test_Sc");
+
+
         }
 
         [TestMethod]

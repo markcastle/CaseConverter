@@ -1,7 +1,12 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
 
 namespace CaseConverter.Benchmarks;
 
+[SimpleJob(RuntimeMoniker.NetCoreApp31, baseline: true)]
+[SimpleJob(RuntimeMoniker.Net50)]
+[SimpleJob(RuntimeMoniker.Net60)]
+[SimpleJob(RuntimeMoniker.Net70)]
 [MemoryDiagnoser]
 public class CaseConverterBenchmarks
 {

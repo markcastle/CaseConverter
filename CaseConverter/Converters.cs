@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -98,7 +99,7 @@ namespace CaseConverter
             return builder.ToString();
         }
 
-        
+
         /// <summary>
         /// Converts a given string to camel case.
         /// </summary>
@@ -317,6 +318,8 @@ namespace CaseConverter
             return result.ToString();
         }
 
+#if NETSTANDARD2_0 || NETSTANDARD2_1 || NETCOREAPP3_1 || NET5_0
+
         /// <summary>
         /// Extension method to convert a given string to title case.
         /// </summary>
@@ -364,7 +367,49 @@ namespace CaseConverter
             // Convert the StringBuilder to a string and return it
             return sb.ToString();
         }
-        
+
+#elif NET6_0_OR_GREATER
+
+        /// <summary>
+        /// Extension method to convert a given string to title case.
+        /// </summary>
+        /// <param name="text">The string to convert to title case.</param>
+        /// <returns>A new string with each word in title case.</returns>
+        public static string ToTitleCase(this string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+
+            // Use a StringBuilder to store the output string
+            StringBuilder builder = new(text.Length * 2);
+            bool newWord = true;
+
+            foreach (Rune rune in text.EnumerateRunes())
+            {
+                if (Rune.IsWhiteSpace(rune) || rune.Value is '-' or '_')
+                {
+                    newWord = true;
+                    builder.Append(rune);
+                }
+                else if (newWord)
+                {
+                    builder.Append(Rune.ToUpper(rune, CultureInfo.InvariantCulture));
+                    newWord = false;
+                }
+                else
+                {
+                    builder.Append(Rune.ToLower(rune, CultureInfo.InvariantCulture));
+                }
+            }
+
+            return builder.ToString();
+        }
+
+
+#endif
+
         /// <summary>
         /// Convert a string to Train Case
         /// </summary>

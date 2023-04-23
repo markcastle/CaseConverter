@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+	<TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
     <Authors>Mark Castle</Authors>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <Company>Captive Reality Ltd</Company>
     <Copyright>© Captive Reality Ltd. All Rights Reserved.</Copyright>
     <PackageLicenseFile>LICENCE</PackageLicenseFile>
@@ -17,7 +17,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\README.md" Link="README.md" />
+	<None Include="..\README.md" Link="README.md">
+	  <Pack>True</Pack>
+	  <PackagePath></PackagePath>
+	</None>
   </ItemGroup>
   
   <PropertyGroup>
