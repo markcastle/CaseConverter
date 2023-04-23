@@ -71,7 +71,7 @@ To run tests:
 For the latest version we're working on improving performance and memory efficiency.. here is a comparison of the improvements.
 
 
-Additional gains would likely be possible if we stopped targetting .NET STANDARD 2.0 and .NET STANDARD 2.1 and instead targetted .net 6+
+Additional gains will likely be possible if also target .net 6+.  So far we've only done that with ToTitleCase() but we'll update the other methods soon.
 
 
 #### ToPascalCase()
